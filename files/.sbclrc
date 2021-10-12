@@ -1,0 +1,19 @@
+
+;;; The following lines added by ql:add-to-init-file:
+(let ((quicklisp-init (merge-pathnames "quicklisp/setup.lisp"
+                                       (user-homedir-pathname))))
+  (when (probe-file quicklisp-init)
+    (load quicklisp-init)))
+
+(loop :for key :in (cdr sb-ext:*posix-argv*)
+      :do (cond ((string= key "--radiance")
+                 (ql:quickload :radiance)
+                 (funcall (fdefinition (list 'setf (intern "ENVIRONMENT" :radiance-core))) "default"))
+                ((string= key "--swank")
+                 (ql:quickload :swank)
+                 (uiop:symbol-call :swank :create-server :dont-close t :port 4005))
+                (t
+                  (ql:quickload key))))
+
+(when (member "--radiance" sb-ext:*posix-argv* :test #'string=)
+  (uiop:symbol-call :radiance :startup))
