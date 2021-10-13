@@ -1,9 +1,13 @@
 
-### Makefile parameters
+`make %` - build an image
 
-STAGE - Dockerfile stage to build
+`make %-run` - run an image
 
-APP - system to run for `production` stage
+`make %-publish` - publish an image
+
+`make stop` - stop the last started container
+
+Where `%` is the name of a Dockerfile stage. One of `base`, `development`, `samples`, or `production`.
 
 ### Dockerfile stages
 
@@ -30,3 +34,8 @@ Port 4005 - swank
 Parameters:
 
 APP - name of the system to run
+
+### Makefile parameters
+
+APP - system to run for `production` stage
+

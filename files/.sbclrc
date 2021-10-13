@@ -11,9 +11,11 @@
                  (funcall (fdefinition (list 'setf (intern "ENVIRONMENT" :radiance-core))) "default"))
                 ((string= key "--swank")
                  (ql:quickload :swank)
-                 (uiop:symbol-call :swank :create-server :dont-close t :port 4005))
+                 (uiop:symbol-call :swank :create-server :dont-close t :port 4005 :style :spawn))
                 (t
                   (ql:quickload key))))
 
 (when (member "--radiance" sb-ext:*posix-argv* :test #'string=)
-  (uiop:symbol-call :radiance :startup))
+  (uiop:symbol-call :radiance :startup)
+  (loop (sleep 100500)))
+
