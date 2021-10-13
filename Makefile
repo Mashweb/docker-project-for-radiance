@@ -45,15 +45,31 @@ stop:
 restart: stop run
 
 publish:
+ifdef STAGE
+	docker tag $(IMAGE)-$(STAGE):$(TAG) $(DHUB_UNAME)/$(IMAGE)-$(STAGE):$(TAG)
+	docker push $(DHUB_UNAME)/$(IMAGE)-$(STAGE):$(TAG)
+else
 	docker tag $(IMAGE):$(TAG) $(DHUB_UNAME)/$(IMAGE):$(TAG)
 	docker push $(DHUB_UNAME)/$(IMAGE):$(TAG)
+endif
 
 publish_multi:
+ifdef STAGE
+	docker buildx build \
+	    --platform $(PLATFORMS) \
+	    --target production \
+	    --network host \
+	    -t $(DHUB_UNAME)/$(IMAGE)-$(STAGE):$(TAG) . --push
+else
 	docker buildx build \
 	    --platform $(PLATFORMS) \
 	    --target production \
 	    --network host \
 	    -t $(DHUB_UNAME)/$(IMAGE):$(TAG) . --push
+endif
+
+create_buildkit:
+	docker buildx create --use --buildkitd-flags '--allow-insecure-entitlement network.host'
 
 list:
 	docker images
