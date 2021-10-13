@@ -27,6 +27,8 @@ VOLUME /apps
 VOLUME /db
 EXPOSE 8080
 
+ENTRYPOINT echo "!!!! base image only has Radiance's landing page. Use other stages to make this Dockerfile do something useful !!!!" && sbcl --radiance
+
 #### Development image adds swank and an open port to connect to it
 FROM base AS development
 
