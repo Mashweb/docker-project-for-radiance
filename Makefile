@@ -33,7 +33,7 @@ help:
 
 build-all: $(STAGES)
 
-$(STAGES):%: Dockerfile Makefile files/*.sh files/.sbclrc
+$(STAGES):%: Dockerfile Makefile files/*.sh files/.sbclrc files/shirakumo-dist.txt
 	docker build --network host --target $@   --build-arg APP=$(APP) -t $(IMAGE)-$@:$(TAG) .
 
 $(STAGES:=-run):%-run: %
@@ -75,3 +75,8 @@ clean:
 	docker image prune -af
 
 distclean: stop rm rmi clean
+
+files/shirakumo-dist.txt:
+	wget 'http://dist.tymoon.eu/shirakumo.txt' -O $@
+
+.PHONY: files/shirakumo-dist.txt

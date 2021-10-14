@@ -8,12 +8,13 @@ RUN apk add --no-cache sbcl && adduser -h /home/radiance -D radiance && \
 USER radiance
 WORKDIR /home/radiance
 
+COPY files/shirakumo-dist.txt files/install-shirakumo-dist.lisp /home/radiance/
 # Quicklisp
 RUN wget https://beta.quicklisp.org/quicklisp.lisp && \
     echo '\
 ' | sbcl --load quicklisp.lisp \
          --eval '(quicklisp-quickstart:install)' \
-         --eval '(ql-dist:install-dist "http://dist.tymoon.eu/shirakumo.txt")' \
+         --load '/home/radiance/install-shirakumo-dist.lisp' \
          --eval '(ql:quickload :ironclad)' \
          --eval '(ql:quickload :verbose)' \
          --eval '(ql:quickload :radiance)' \
