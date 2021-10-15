@@ -1,34 +1,35 @@
-#### BASE image has sbcl, quicklisp, and Radiance
-FROM alpine:latest AS base
-
+# vim: set expandtab
+#### BASE image has SBCL, quicklisp, and Radiance
+FROM alpine:edge AS base
 # SBCL
-RUN apk add --no-cache sbcl && adduser -h /home/radiance -D radiance && \
-    ln -s /home/radiance/quicklisp/local-projects /apps && \
-    ln -s /home/radiance/.config/radiance/default /db
-USER radiance
-WORKDIR /home/radiance
+RUN apk add --no-cache sbcl
+RUN ln -s /root/quicklisp/local-projects /apps && \
+    ln -s /root/.config/radiance/default /db
 
-COPY files/shirakumo-dist.txt files/install-shirakumo-dist.lisp /home/radiance/
+WORKDIR /root
+
 # Quicklisp
-RUN wget https://beta.quicklisp.org/quicklisp.lisp && \
-    echo '\
-' | sbcl --load quicklisp.lisp \
+ADD https://beta.quicklisp.org/quicklisp.lisp /tmp
+RUN ls -al /usr/bin
+RUN /usr/bin/sbcl --load '/tmp/quicklisp.lisp' \
          --eval '(quicklisp-quickstart:install)' \
-         --load '/home/radiance/install-shirakumo-dist.lisp' \
+         --eval '(ql-util:without-prompting (ql-dist:install-dist "http://dist.tymoon.eu/shirakumo.txt"))' \
          --eval '(ql:quickload :ironclad)' \
          --eval '(ql:quickload :verbose)' \
          --eval '(ql:quickload :radiance)' \
          --eval '(setf (radiance-core:environment) "default")' \
          --eval '(radiance:startup)' \
-         --eval '(sb-ext:quit)'
-COPY files/.sbclrc /home/radiance/
+         --eval '(sb-ext:quit)' && \
+    rm /tmp/quicklisp.lisp
+COPY files/.sbclrc .
 COPY files/quickload.sh files/quickload-radiance-app.sh /usr/bin/
 
 VOLUME /apps
 VOLUME /db
 EXPOSE 8080
 
-ENTRYPOINT echo "!!!! base image only has Radiance's landing page. Use other stages to make this Dockerfile do something useful !!!!" && sbcl --radiance
+ENV APP ""
+ENTRYPOINT sbcl --radiance
 
 #### Development image adds swank and an open port to connect to it
 FROM base AS development
@@ -43,11 +44,3 @@ FROM development AS samples
 RUN quickload-radiance-app.sh plaster filebox keyword-reviews purplish reader
 
 ENTRYPOINT sbcl --swank --radiance plaster filebox keyword-reviews purplish reader
-
-#### Base image with configurable application to start
-FROM base AS production
-
-ARG APP
-RUN test -n "$APP" || ( echo "!!!! APP argument is required for production images !!!!" && exit 1 )
-ENTRYPOINT sbcl --radiance $APP
-# Setup Radiance environment based on a build option
