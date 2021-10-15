@@ -1,7 +1,5 @@
-#SHELL := /bin/bash
-
 # App name for 'production' image
-APP            ?= 
+APP            ?= samples
 # Stage name
 STAGE          ?= production
 # Image name
@@ -21,6 +19,12 @@ PLATFORMS      ?= linux/amd64,linux/arm64
 
 # All stages
 STAGES          = base development samples production
+
+
+## Example uses of this makefile:
+##
+##   make production-run
+##   make samples-run
 
 help:
 	@echo "Please choose one of the following targets:"
