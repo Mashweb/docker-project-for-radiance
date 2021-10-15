@@ -1,6 +1,12 @@
 # App name for 'production' image
-APP            ?= samples
-# Stage name
+#    This is the name of docker's build target.
+APP            ?= radiance-website
+
+# Stage name; one of: alpine, base, production, samples
+#    Each is the base of the next, e.g. base is the base of proecution and
+#    production is the base of samples. (See the Dockerfile and
+#    https://docs.docker.com/develop/develop-images/multistage-build/ .)
+
 STAGE          ?= production
 # Image name
 IMAGE          ?= radiance
