@@ -4,5 +4,7 @@ radiance:
     - "db:/db"
     - "apps:/apps"
   ports:
-    - "8081:8080"
-    - "4006:4005"
+    - "8080:8080"
+    - "4005:4005"
+  environment:
+    APP: 
