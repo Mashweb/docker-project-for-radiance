@@ -96,7 +96,7 @@ $(STAGES:=-deploy):%-deploy: %
 	    -p $(SWANK_PORT):4005 -p $(HTTP_PORT):8080 \
 	    --mount src=$(DB_DIR),target=/db,type=bind \
 	    --mount src=$(APPS_DIR),target=/apps,type=bind \
-	    $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG)
+	    $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG) \
 	  echo Started container $(CONT) with $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG); \
 	"
 
