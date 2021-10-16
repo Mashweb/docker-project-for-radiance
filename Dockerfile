@@ -10,7 +10,6 @@ WORKDIR /root
 
 # Quicklisp
 ADD https://beta.quicklisp.org/quicklisp.lisp /tmp
-RUN ls -al /usr/bin
 RUN /usr/bin/sbcl --load '/tmp/quicklisp.lisp' \
          --eval '(quicklisp-quickstart:install)' \
          --eval '(ql-util:without-prompting (ql-dist:install-dist "http://dist.tymoon.eu/shirakumo.txt"))' \

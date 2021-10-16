@@ -66,3 +66,38 @@ DROPLET\_IP - droplet IP. Should have publickey authentication configured
 Example:
 
 `make samples-deploy DROPLET_UNAME=root DROPLET_IP=192.168.0.10`
+
+### Using `docker compose`
+
+1. Clone this repo on the remove server.
+2. Edit docker-compose.yaml to suit your needs (it's documented in the file itself).
+3. Run `docker-compose up`.
+
+## Scenarios
+
+Assuming you have emacs with slime installed on localhost, and docker on both localhost and a remote server.
+
+### Running locally
+
+1. `make samples-run`
+
+Any stage will work with different image contents.
+
+### Debugging locally
+
+1. `make-samples-run`
+2. In emacs: `M-x slime-connect`
+
+Only development and samples stages support debugging with slime.
+
+### Running on a VPS
+
+1. Clone this repo on the VPS
+2. Edit docker-compose.yaml
+3. Run `docker-compose up`
+
+### Debugging on a VPS
+
+1. Make sure the container you need to debug uses a development or samples image
+2. Make an ssh tunnel for slime: `ssh -fNL 4005:<remote IP>:4005 <remote IP>`
+3. Connect to the remote lisp with slime: `M-x slime-connect`

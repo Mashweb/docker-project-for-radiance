@@ -1,10 +1,19 @@
-radiance:
-  image: naryl/radiance-samples
-  volumes:
-    - "db:/db"
-    - "apps:/apps"
-  ports:
-    - "8080:8080"
-    - "4005:4005"
-  environment:
-    APP: 
+version: "3.4"
+services:
+  radiance:
+    build:
+      context: .
+      target: samples # Target stage. 'base', 'development', 'samples'
+    volumes:
+      - type: bind
+        source: ./db  # Bind mount for Radiance's db and settings directory
+        target: /db
+      - type: bind
+        source: ./apps  # Bind mount for container's apps directory
+        target: /apps
+    ports:
+      # Port mappings have host on the left and container on the right
+      - "8080:8080" # Port mapping for HTTP
+      - "4005:4005" # Port mapping for slime
+    environment:
+      APP: # Additional lisp system to load
