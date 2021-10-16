@@ -87,6 +87,7 @@ create_buildkit:
 
 $(STAGES:=-deploy):%-deploy: %
 	ssh $(DROPLET_UNAME)@$(DROPLET_IP) " \
+	  docker login; \
 	  docker pull $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG); \
 	  docker stop $(CONT); \
 	  echo Stopped container $(CONT); \
