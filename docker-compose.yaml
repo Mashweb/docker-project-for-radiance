@@ -9,7 +9,7 @@ services:
         source: ./db  # Bind mount for Radiance's db and settings directory
         target: /db
       - type: bind
-        source: ./apps  # Bind mount for container's apps directory
+        source: ./apps  # Bind mount for directory with additional lisp systems
         target: /apps
     ports:
       # Port mappings have host on the left and container on the right

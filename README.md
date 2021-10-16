@@ -85,7 +85,7 @@ Any stage will work with different image contents.
 
 ### Debugging locally
 
-1. `make-samples-run`
+1. `make samples-run`
 2. In emacs: `M-x slime-connect`
 
 Only development and samples stages support debugging with slime.
