@@ -25,9 +25,14 @@ DHUB_UNAME  ?= tomelam
 # Docker platforms
 PLATFORMS   ?= linux/amd64,linux/arm64
 # Path to db/settings volume
-DB_VOLUME   ?= db
+DB_DIR      ?= db
 # Path to local-projects volume
-APPS_VOLUME ?= apps
+APPS_DIR    ?= apps
+
+# Digital Ocean droplet username
+DROPLET_UNAME  ?= root
+# Internet-exposed IP address of the Digital Ocean droplet
+DROPLET_IP     ?= 164.90.211.183
 
 # All stages
 STAGES          = base development samples
@@ -42,21 +47,22 @@ help:
 	@echo "STAGE, STAGE-run, stop, STAGE-publish, STAGE-publish-multi"
 	@echo "create_buildkit, list, rm, rmi, clean, distclean"
 	@echo "Options:"
-	@echo "  APP         - system to load for 'production' image"
-	@echo "  HTTP_PORT   - host network port to make Radiance available on. Default: 8080"
-	@echo "  SWANK_PORT  - host network port to make SWANK available on. Default: 4005"
-	@echo "  DB_VOLUME   - path to the directory with Radiance's databases and settings. Default: ./db"
-	@echo "  APPS_VOLUME - path to the directory with local asdf systems. Default: ./apps"
+	@echo "  APP        - system to load for 'production' image"
+	@echo "  HTTP_PORT  - host network port to make Radiance available on. Default: 8080"
+	@echo "  SWANK_PORT - host network port to make SWANK available on. Default: 4005"
+	@echo "  DB_DIR     - path to the directory with Radiance's databases and settings. Default: db"
+	@echo "  APPS_DIR   - path to the directory with local asdf systems. Default: apps"
 
 build-all: $(STAGES)
 
 $(STAGES):%: Dockerfile Makefile files/*.sh files/.sbclrc
-	docker build --target $@   --build-arg APP=$(APP) -t $(IMAGE)-$@:$(TAG) .
+	docker build --target $@ --build-arg APP=$(APP) -t $(IMAGE)-$@:$(TAG) .
 
 $(STAGES:=-run):%-run: %
 	docker run --rm --name $(CONT) -d \
 		-p $(SWANK_PORT):4005 -p $(HTTP_PORT):8080 \
-		-v $(DB_VOLUME):/db -v $(APPS_VOLUME):/apps \
+		--mount src=$(DB_DIR),target=/db,type=bind \
+		--mount src=$(APPS_DIR),target=/apps,type=bind \
 		$(IMAGE)-$<:$(TAG)
 
 stop:
@@ -67,17 +73,32 @@ stop:
 	fi;
 
 $(STAGES:=-publish):%-publish: %
-	docker tag $(IMAGE)-$@:$(TAG) $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG)
-	docker push $(DHUB_UNAME)/$(IMAGE)-$@:$(TAG)
+	docker tag $(IMAGE)-$<:$(TAG) $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG)
+	docker push $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG)
 
 $(STAGES:=-publish-multi):%-publish-multi: %
 	docker buildx build \
-	    --platform $(PLATFORMS) \
-	    --target production \
-	    -t $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG) . --push
+		--platform $(PLATFORMS) \
+		--target $< \
+		-t $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG) . --push
 
 create_buildkit:
 	docker buildx create --use
+
+$(STAGES:=-deploy):%-deploy: %
+	ssh $(DROPLET_UNAME)@$(DROPLET_IP) " \
+	  docker pull $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG); \
+	  docker stop $(CONT); \
+	  echo Stopped container $(CONT); \
+	  docker rm $(CONT); \
+	  echo Removed container $(CONT); \
+	  docker run --rm --name $(CONT) -d \
+	    -p $(SWANK_PORT):4005 -p $(HTTP_PORT):8080 \
+	    --mount src=$(DB_DIR),target=/db,type=bind \
+	    --mount src=$(APPS_DIR),target=/apps,type=bind \
+	    $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG)
+	  echo Started container $(CONT) with $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG); \
+	"
 
 list:
 	docker images
@@ -94,4 +115,3 @@ clean:
 	docker image prune -af
 
 distclean: stop rm rmi clean
-

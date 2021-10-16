@@ -24,8 +24,6 @@ RUN /usr/bin/sbcl --load '/tmp/quicklisp.lisp' \
 COPY files/.sbclrc .
 COPY files/quickload.sh files/quickload-radiance-app.sh /usr/bin/
 
-VOLUME /apps
-VOLUME /db
 EXPOSE 8080
 
 ENV APP ""

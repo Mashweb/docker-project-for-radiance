@@ -1,0 +1,8 @@
+radiance:
+  image: naryl/radiance-samples
+  volumes:
+    - "db:/db"
+    - "apps:/apps"
+  ports:
+    - "8081:8080"
+    - "4006:4005"
