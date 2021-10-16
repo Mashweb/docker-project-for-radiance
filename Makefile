@@ -25,9 +25,9 @@ DHUB_UNAME  ?= tomelam
 # Docker platforms
 PLATFORMS   ?= linux/amd64,linux/arm64
 # Path to db/settings volume
-DB_DIR      ?= db
+DB_DIR      ?= $(shell pwd)/db
 # Path to local-projects volume
-APPS_DIR    ?= apps
+APPS_DIR    ?= $(shell pwd)/apps
 
 # Digital Ocean droplet username
 DROPLET_UNAME  ?= root
