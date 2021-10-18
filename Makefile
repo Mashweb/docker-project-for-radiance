@@ -1,13 +1,12 @@
-#SHELL := /bin/bash
-
 # App name for 'production' image
 #    This is the name of docker's build target.
 APP         ?=
 
 # Stage name; one of: base, development, samples
-#    Each is the base of the next, base is the base of development and
-#    production is the base of samples. (See the Dockerfile and
-#    https://docs.docker.com/develop/develop-images/multistage-build/ )
+#    The "production" and "devolopment" images are built upon the
+#    "base" image. The "samples" image is built upon the "development"
+#    image. (See the Dockerfile and
+#    <https://docs.docker.com/develop/develop-images/multistage-build/>.)
 
 STAGE       ?= base
 # Image name
