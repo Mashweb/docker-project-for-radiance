@@ -31,35 +31,35 @@ For example:
 
 Exposes:
 
-|    Port 8080           - HTTP port
+&nbsp;&nbsp;&nbsp;&nbsp;Port 8080           - HTTP port
 
-|    Mountpoint /apps    - quicklisp's local-projects
+&nbsp;&nbsp;&nbsp;&nbsp;Mountpoint /apps    - quicklisp's local-projects
 
-|    Mountpoint /db.     - Radiance settings and database
+&nbsp;&nbsp;&nbsp;&nbsp;Mountpoint /db.     - Radiance settings and database
 
 #### `development` - base image with swank
 
 Exposes:
 
-|    Port 4005           - swank
+&nbsp;&nbsp;&nbsp;&nbsp;Port 4005           - swank
 
 #### `samples` - development image with Radiance's sample projects
 
 ### Makefile variables
 
-|    APP               Extra system to load. If this parameter is not empty, the container
-|                      will run `(ql:quickload <APP>)` after initializing.
+&nbsp;&nbsp;&nbsp;&nbsp;APP               Extra system to load. If this parameter is not empty, the container
+&nbsp;&nbsp;&nbsp;&nbsp;                  will run `(ql:quickload <APP>)` after initializing.
 
-|    HTTP_PORT         Host network port to make Radiance available on.
-|                      Default: 8080
+&nbsp;&nbsp;&nbsp;&nbsp;HTTP_PORT         Host network port to make Radiance available on.
+&nbsp;&nbsp;&nbsp;&nbsp;                  Default: 8080
 
-|    SWANK_PORT.       Host network port to make SWANK available on.
-|                      Default: 4005
+&nbsp;&nbsp;&nbsp;&nbsp;SWANK_PORT.       Host network port to make SWANK available on.
+&nbsp;&nbsp;&nbsp;&nbsp;                  Default: 4005
 
-|    DB_DIR            Path to the directory with Radiance's databases and settings.
-|                      Default: db
+&nbsp;&nbsp;&nbsp;&nbsp;DB_DIR            Path to the directory with Radiance's databases and settings.
+&nbsp;&nbsp;&nbsp;&nbsp;                  Default: db
 
-|    APPS_DIR          Path to the directory with local asdf systems. Default: apps
+&nbsp;&nbsp;&nbsp;&nbsp;APPS_DIR          Path to the directory with local asdf systems. Default: apps
 
 ## Deploying
 
@@ -71,9 +71,9 @@ There are two options. Either use the makefile or use docker compose.
 
 Parameters:
 
-|    DROPLET_UNAME     - username on the droplet. Default: root
+&nbsp;&nbsp;&nbsp;&nbsp;DROPLET_UNAME     - username on the droplet. Default: root
 
-|    DROPLET_IP        - droplet IP. Should have publickey authentication configured
+&nbsp;&nbsp;&nbsp;&nbsp;DROPLET_IP        - droplet IP. Should have publickey authentication configured
 
 For example:
 
