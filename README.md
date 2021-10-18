@@ -23,7 +23,7 @@ For example:
 
     `make samples-run`  - run the `samples` image
 
-    `make base-publish` - publish `base` image to DockerHub
+    `make base-publish` - publish the `base` image to DockerHub
 
 ### Dockerfile stages
 
@@ -49,13 +49,13 @@ Exposes:
 
     APP                - extra system to load. If this parameter is not empty container will run `(ql:quickload <APP>)` after initializing.
 
-    HTTP\_PORT         - host network port to make Radiance available on. Default: 8080
+    HTTP_PORT         - host network port to make Radiance available on. Default: 8080
 
-    SWANK\_PORT.       - host network port to make SWANK available on. Default: 4005
+    SWANK_PORT.       - host network port to make SWANK available on. Default: 4005
 
-    DB\_DIR            - path to the directory with Radiance's databases and settings. Default: db
+    DB_DIR            - path to the directory with Radiance's databases and settings. Default: db
 
-    APPS\_DIR          - path to the directory with local asdf systems. Default: apps
+    APPS_DIR          - path to the directory with local asdf systems. Default: apps
 
 ## Deploying
 
@@ -67,9 +67,9 @@ There are two options. Either use the makefile or use docker compose.
 
 Parameters:
 
-    DROPLET\_UNAME     - username on the droplet. Default: root
+    DROPLET_UNAME     - username on the droplet. Default: root
 
-    DROPLET\_IP        - droplet IP. Should have publickey authentication configured
+    DROPLET_IP        - droplet IP. Should have publickey authentication configured
 
 For example:
 
