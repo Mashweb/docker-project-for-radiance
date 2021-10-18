@@ -98,7 +98,7 @@ Assuming you have emacs with slime installed on localhost, and docker on both lo
 
 ### Running locally
 
-`make samples-run`
+    make samples-run
 
 Any stage can work with different image contents.
 
