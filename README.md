@@ -1,21 +1,29 @@
+# Docker Project for an Instance of the Radiance Web Application Environment
 
-## Building
+For a background on the Radiance web application environment, see
+[the Radiance homepage](https://shirakumo.github.io/radiance-homepage/),
+[the Radiance project](https://github.com/Shirakumo/radiance), and
+[the Radiance tutorial](https://github.com/Shirakumo/radiance-tutorial/blob/master/Part%200.md).
 
-`make %` - build an image
+## Building, running, stopping, publishing
 
-`make %-run` - run an image in a new container
+After cloning this Git project, `cd` into the working directory and
+substitute the name of a Dockerfile stage, one of `base`, `development`, or `samples`,
+in place of `%` in any of the following `make` commands:
 
-`make %-publish` - publish an image
+    `make %` - build an image
 
-`make stop` - stop the last started container
+    `make %-run` - run an image in a new container
 
-Where `%` is the name of a Dockerfile stage. One of `base`, `development` or `samples`.
+    `make stop` - stop the last started container
 
-Examples:
+    `make %-publish` - publish an image
 
-`make samples-run` - run the `samples` image
+For example:
 
-`make base-publish` - publish `base` image to DockerHub
+    `make samples-run` - run the `samples` image
+
+    `make base-publish` - publish `base` image to DockerHub
 
 ### Dockerfile stages
 
@@ -23,21 +31,21 @@ Examples:
 
 Exposes:
 
-Port 8080 - HTTP
+    Port 8080 - HTTP
 
-Mountpoint /apps - quicklisp's local-projects
+    Mountpoint /apps - quicklisp's local-projects
 
-Mountpoint /db - Radiance settings and database
+    Mountpoint /db - Radiance settings and database
 
 #### `development` - base image with swank
 
 Exposes:
 
-Port 4005 - swank
+    Port 4005 - swank
 
 #### `samples` - development image with Radiance's sample projects
 
-### Makefile parameters
+### Makefile variables
 
 APP - extra system to load. If this parameter is not empty container will run `(ql:quickload <APP>)` after initializing.
 
@@ -88,16 +96,16 @@ Any stage will work with different image contents.
 1. `make samples-run`
 2. In emacs: `M-x slime-connect`
 
-Only development and samples stages support debugging with slime.
+Only the `development` and `samples` stages support debugging with slime.
 
 ### Running on a VPS
 
-1. Clone this repo on the VPS
-2. Edit docker-compose.yaml
-3. Run `docker-compose up`
+1. Clone this repo on the VPS.
+2. Edit `docker-compose.yaml`.
+3. Run `docker-compose up`.
 
 ### Debugging on a VPS
 
-1. Make sure the container you need to debug uses a development or samples image
-2. Make an ssh tunnel for slime: `ssh -fNL 4005:<remote IP>:4005 <remote IP>`
-3. Connect to the remote lisp with slime: `M-x slime-connect`
+1. Make sure the container you need to debug uses a development or samples image.
+2. Make an ssh tunnel for slime: `ssh -fNL 4005:<remote IP>:4005 <remote IP>`.
+3. Connect to the remote Lisp with slime: `M-x slime-connect`.
