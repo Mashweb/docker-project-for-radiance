@@ -7,8 +7,8 @@ APP         ?=
 #    "base" image. The "samples" image is built upon the "development"
 #    image. (See the Dockerfile and
 #    <https://docs.docker.com/develop/develop-images/multistage-build/>.)
-
 STAGE       ?= base
+
 # Image name
 IMAGE       ?= radiance
 # Image tag
@@ -42,10 +42,12 @@ STAGES          = base development samples
 ##   make samples-run
 
 help:
-	@echo "Please choose one of the following targets:"
-	@echo "STAGE, STAGE-run, stop, STAGE-publish, STAGE-publish-multi"
-	@echo "create_buildkit, list, rm, rmi, clean, distclean"
-	@echo "Options:"
+	@echo "Please choose one of the following targets (substituting the
+	@echo "name of the stage for STAGE):"
+	@echo "  STAGE, STAGE-run, stop, STAGE-publish, STAGE-publish-multi,"
+	@echo "  create_buildkit, list, rm, rmi, clean, distclean"
+	@echo
+	@echo "Variables:"
 	@echo "  APP        - system to load for 'production' image"
 	@echo "  HTTP_PORT  - host network port to make Radiance available on. Default: 8080"
 	@echo "  SWANK_PORT - host network port to make SWANK available on. Default: 4005"
