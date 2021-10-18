@@ -7,6 +7,11 @@ For a background on the Radiance web application environment, see
 
 ## Building, running, stopping, publishing
 
+The `Dockerfile` and `Makefile` in this Git project support the maintainance and use
+of four stages of image and container.
+(See [the overview of Docker multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/).)
+The "production" and "devolopment" images are built upon the "base" image.
+The "samples" image is built upon the "development" image.
 After cloning this Git project, `cd` into the working directory and
 substitute the name of a Dockerfile stage, one of `base`, `development`, or `samples`,
 in place of `%` in any of the following `make` commands:
