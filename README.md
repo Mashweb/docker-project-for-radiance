@@ -53,16 +53,12 @@ Exposes:
 | --- | --- |
 | APP | Extra system to load. If this parameter is not empty, the container |
 | | will run `(ql:quickload <APP>)` after initializing. |
-| --- | --- |
 | HTTP_PORT | Host network port to make Radiance available on. |
 | | Default: 8080 |
-| --- | --- |
 | SWANK_PORT | Host network port to make SWANK available on. |
 | | Default: 4005 |
-| --- | --- |
 | DB_DIR | Path to the directory with Radiance's databases and settings. |
 | | Default: db |
-| --- | --- |
 | APPS_DIR | Path to the directory with local asdf systems. |
 | | Default: apps |
 
