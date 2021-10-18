@@ -69,7 +69,7 @@ There are two options. Either use the makefile or use docker compose.
 ### Using the makefile
 
 To deploy an image to a VPS container,
-substitute the name of a Dockerfile stage, one of base, development, or samples, in place of `%` in the following make command:
+substitute the name of a Dockerfile stage, one of base, development, or samples, in place of `%` in the following `make` command:
 
     make %-deploy
 
