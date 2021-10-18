@@ -43,7 +43,7 @@ Exposes:
 
 
 | Port | Use |
-| ===  | === |
+| ---  | --- |
 | 4005 | swank |
 
 #### `samples` - development image with Radiance's sample projects
