@@ -41,8 +41,6 @@ Exposes:
 
 Exposes:
 
-
-| Port | Use |
 | ---  | --- |
 | 4005 | swank |
 
