@@ -68,13 +68,18 @@ There are two options. Either use the makefile or use docker compose.
 
 ### Using the makefile
 
-`make %-deploy`.       - deploy an image to a VPS container
+To deploy an image to a VPS container:
 
-Parameters:
+    make %-deploy
 
-&nbsp;&nbsp;&nbsp;&nbsp;DROPLET_UNAME     - username on the droplet. Default: root
+Variables:
 
-&nbsp;&nbsp;&nbsp;&nbsp;DROPLET_IP        - droplet IP. Should have publickey authentication configured
+| Variable | Purpose |
+| --- | --- |
+| DROPLET_UNAME | username on the droplet |
+| | Default: root |
+| DROPLET_IP | droplet IP |
+| | The droplet should have publickey authentication configured. |
 
 For example:
 
