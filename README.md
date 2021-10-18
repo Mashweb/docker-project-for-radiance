@@ -41,7 +41,9 @@ Exposes:
 
 Exposes:
 
-| Port 4005 | swank |
+| Port | Use |
+| === | === |
+| 4005 | swank |
 
 #### `samples` - development image with Radiance's sample projects
 
