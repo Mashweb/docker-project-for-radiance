@@ -11,19 +11,19 @@ After cloning this Git project, `cd` into the working directory and
 substitute the name of a Dockerfile stage, one of `base`, `development`, or `samples`,
 in place of `%` in any of the following `make` commands:
 
-    `make %`            - build an image
+    make %             # Build an image.
 
-    `make %-run`.       - run an image in a new container
+    make %-run         # Run an image in a new container.
 
-    `make stop`.        - stop the last started container
+    make stop          # Stop the last started container.
 
-    `make %-publish`    - publish an image
+    make %-publish     # Publish an image.
 
 For example:
 
-    `make samples-run`  - run the `samples` image
+    make samples-run   # Run the `samples` image.
 
-    `make base-publish` - publish the `base` image to DockerHub
+    make base-publish  # Publish the `base` image to DockerHub.
 
 ### Dockerfile stages
 
@@ -31,31 +31,35 @@ For example:
 
 Exposes:
 
-    Port 8080           - HTTP port
+|    Port 8080           - HTTP port
 
-    Mountpoint /apps    - quicklisp's local-projects
+|    Mountpoint /apps    - quicklisp's local-projects
 
-    Mountpoint /db.     - Radiance settings and database
+|    Mountpoint /db.     - Radiance settings and database
 
 #### `development` - base image with swank
 
 Exposes:
 
-    Port 4005           - swank
+|    Port 4005           - swank
 
 #### `samples` - development image with Radiance's sample projects
 
 ### Makefile variables
 
-    APP                - extra system to load. If this parameter is not empty container will run `(ql:quickload <APP>)` after initializing.
+|    APP               Extra system to load. If this parameter is not empty, the container
+|                      will run `(ql:quickload <APP>)` after initializing.
 
-    HTTP_PORT         - host network port to make Radiance available on. Default: 8080
+|    HTTP_PORT         Host network port to make Radiance available on.
+|                      Default: 8080
 
-    SWANK_PORT.       - host network port to make SWANK available on. Default: 4005
+|    SWANK_PORT.       Host network port to make SWANK available on.
+|                      Default: 4005
 
-    DB_DIR            - path to the directory with Radiance's databases and settings. Default: db
+|    DB_DIR            Path to the directory with Radiance's databases and settings.
+|                      Default: db
 
-    APPS_DIR          - path to the directory with local asdf systems. Default: apps
+|    APPS_DIR          Path to the directory with local asdf systems. Default: apps
 
 ## Deploying
 
@@ -67,9 +71,9 @@ There are two options. Either use the makefile or use docker compose.
 
 Parameters:
 
-    DROPLET_UNAME     - username on the droplet. Default: root
+|    DROPLET_UNAME     - username on the droplet. Default: root
 
-    DROPLET_IP        - droplet IP. Should have publickey authentication configured
+|    DROPLET_IP        - droplet IP. Should have publickey authentication configured
 
 For example:
 
