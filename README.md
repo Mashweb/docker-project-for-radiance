@@ -31,31 +31,31 @@ For example:
 
 Exposes:
 
-    Port 8080 - HTTP
+    Port 8080         - HTTP port
 
-    Mountpoint /apps - quicklisp's local-projects
+    Mountpoint /apps  - quicklisp's local-projects
 
-    Mountpoint /db - Radiance settings and database
+    Mountpoint /db.   - Radiance settings and database
 
 #### `development` - base image with swank
 
 Exposes:
 
-    Port 4005 - swank
+    Port 4005         - swank
 
 #### `samples` - development image with Radiance's sample projects
 
 ### Makefile variables
 
-APP - extra system to load. If this parameter is not empty container will run `(ql:quickload <APP>)` after initializing.
+    APP               - extra system to load. If this parameter is not empty container will run `(ql:quickload <APP>)` after initializing.
 
-HTTP\_PORT  - host network port to make Radiance available on. Default: 8080
+    HTTP\_PORT        - host network port to make Radiance available on. Default: 8080
 
-SWANK\_PORT - host network port to make SWANK available on. Default: 4005
+    SWANK\_PORT.      - host network port to make SWANK available on. Default: 4005
 
-DB\_DIR     - path to the directory with Radiance's databases and settings. Default: db
+    DB\_DIR           - path to the directory with Radiance's databases and settings. Default: db
 
-APPS\_DIR   - path to the directory with local asdf systems. Default: apps
+    APPS\_DIR         - path to the directory with local asdf systems. Default: apps
 
 ## Deploying
 
@@ -67,13 +67,13 @@ There are two options. Either use the makefile or use docker compose.
 
 Parameters:
 
-DROPLET\_UNAME - username on the droplet. Default: root
+    DROPLET\_UNAME - username on the droplet. Default: root
 
-DROPLET\_IP - droplet IP. Should have publickey authentication configured
+    DROPLET\_IP - droplet IP. Should have publickey authentication configured
 
-Example:
+For example:
 
-`make samples-deploy DROPLET_UNAME=root DROPLET_IP=192.168.0.10`
+    make samples-deploy DROPLET_UNAME=root DROPLET_IP=192.168.0.10
 
 ### Using `docker compose`
 
@@ -87,9 +87,9 @@ Assuming you have emacs with slime installed on localhost, and docker on both lo
 
 ### Running locally
 
-1. `make samples-run`
+`make samples-run`
 
-Any stage will work with different image contents.
+Any stage can work with different image contents.
 
 ### Debugging locally
 
