@@ -5,6 +5,9 @@ For a background on the Radiance web application environment, see
 [the Radiance project](https://github.com/Shirakumo/radiance), and
 [the Radiance tutorial](https://github.com/Shirakumo/radiance-tutorial/blob/master/Part%200.md).
 
+On Linux, which many users of this Docker project will be using, it is good to manage Docker as a non-root user.
+See [Post-installation steps for Linux](https://docs.docker.com/engine/install/linux-postinstall/) on the Docker website.
+
 ## Building, running, stopping, publishing
 
 The `Dockerfile` and `Makefile` in this Git project support the maintainance and use
