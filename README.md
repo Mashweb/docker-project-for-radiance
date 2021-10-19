@@ -5,8 +5,11 @@ For a background on the Radiance web application environment, see
 [the Radiance project](https://github.com/Shirakumo/radiance), and
 [the Radiance tutorial](https://github.com/Shirakumo/radiance-tutorial/blob/master/Part%200.md).
 
-On Linux, which many users of this Docker project will be using, it is good to manage Docker as a non-root user.
+## Notes for using the makefile on Linux
+
+1. On Linux, which many users of this Docker project will be using, it is good to manage Docker as a non-root user.
 See [Post-installation steps for Linux](https://docs.docker.com/engine/install/linux-postinstall/) on the Docker website.
+2. The `deploy` stage requires a passwordless login to the VPS or private server. The `ssh-copy-id` command can be used to set that up, but the command uses the user's password to connect to the host, which is a problem if the VPS or private server was already set up for passwordless access from some other computer. One way to solve this problem is described in mjmare's answer to the question [ssh-copy-id not working Permission denied (publickey).](https://www.digitalocean.com/community/questions/ssh-copy-id-not-working-permission-denied-publickey) on DigitalOcean.
 
 ## Building, running, stopping, publishing
 
