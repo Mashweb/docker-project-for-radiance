@@ -86,7 +86,7 @@ $(STAGES:=-publish-multi):%-publish-multi: % create_buildkit
 create_buildkit:
 	docker buildx create --use
 
-$(STAGES:=-deploy):%-deploy: %-publish
+$(STAGES:=-deploy):%-deploy: % %-publish
 	ssh $(DROPLET_UNAME)@$(DROPLET_IP) " \
 	  docker pull $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG); \
 	  docker stop $(CONT); \
