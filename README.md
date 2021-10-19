@@ -9,7 +9,7 @@ For a background on the Radiance web application environment, see
 
 1. On Linux, which many users of this Docker project will be using, it is good to manage Docker as a non-root user.
 See [Post-installation steps for Linux](https://docs.docker.com/engine/install/linux-postinstall/) on the Docker website.
-2. The `deploy` stage requires a passwordless login to the VPS or private server. The `ssh-copy-id` command can be used to set that up, but the command uses the user's password to connect to the host, which is a problem if the VPS or private server was already set up to allow _passwordless-only_ access from some other computer. One way to solve this problem is described in mjmare's answer to the question [ssh-copy-id not working Permission denied (publickey).](https://www.digitalocean.com/community/questions/ssh-copy-id-not-working-permission-denied-publickey) on DigitalOcean. Basically, this solution involves temporarily turning password authentication back on.
+2. The `deploy` stage requires a passwordless login to the VPS or private server. The `ssh-copy-id` command can be used to set that up, but the command uses the user's password to connect to the host, which is a problem if the VPS or private server was already set up to allow _passwordless-only_ access from some other computer. For many Linux servers, one way to solve this problem is described in mjmare's answer to the question [ssh-copy-id not working Permission denied (publickey).](https://www.digitalocean.com/community/questions/ssh-copy-id-not-working-permission-denied-publickey) on DigitalOcean. Basically, this solution involves temporarily turning password authentication back on.
 
 ## Building, running, stopping, publishing
 
