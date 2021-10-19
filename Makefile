@@ -77,7 +77,7 @@ $(STAGES:=-publish):%-publish: %
 	docker tag $(IMAGE)-$<:$(TAG) $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG)
 	docker push $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG)
 
-$(STAGES:=-publish-multi):%-publish-multi: %
+$(STAGES:=-publish-multi):%-publish-multi: % create_buildkit
 	docker buildx build \
 		--platform $(PLATFORMS) \
 		--target $< \
@@ -86,7 +86,7 @@ $(STAGES:=-publish-multi):%-publish-multi: %
 create_buildkit:
 	docker buildx create --use
 
-$(STAGES:=-deploy):%-deploy: %
+$(STAGES:=-deploy):%-deploy: %-publish
 	ssh $(DROPLET_UNAME)@$(DROPLET_IP) " \
 	  docker pull $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG); \
 	  docker stop $(CONT); \
