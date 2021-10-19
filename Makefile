@@ -93,6 +93,7 @@ $(STAGES:=-deploy):%-deploy: %-publish
 	  echo Stopped container $(CONT); \
 	  docker rm $(CONT); \
 	  echo Removed container $(CONT); \
+	  mkdir -p $(DB_DIR) $(APPS_DIR); \
 	  docker run --rm --name $(CONT) -d \
 	    -p $(SWANK_PORT):4005 -p $(HTTP_PORT):8080 \
 	    --mount src=$(DB_DIR),target=/db,type=bind \
