@@ -24,10 +24,7 @@ COPY files/.sbclrc files/init.lisp ./
 COPY files/quickload.sh files/quickload-radiance-app.sh /usr/bin/
 
 EXPOSE 8080
-
-ENV APP ""
-ARG DOMAIN
-ENV DOMAIN $DOMAIN
+ENV APP="" DOMAIN="127.0.0.1"
 CMD sbcl --load init.lisp && sbcl --radiance
 
 #### Development image adds swank and an open port to connect to it
@@ -35,8 +32,7 @@ FROM base AS development
 
 RUN quickload.sh swank
 EXPOSE 4005
-ARG DOMAIN
-ENV DOMAIN $DOMAIN
+ENV DOMAIN="127.0.0.1"
 CMD sbcl --load init.lisp && sbcl --swank --radiance
 
 #### Development image with Radiance's sample projects
@@ -44,6 +40,5 @@ FROM development AS samples
 
 RUN quickload-radiance-app.sh plaster filebox keyword-reviews purplish reader
 
-ARG DOMAIN
-ENV DOMAIN $DOMAIN
+ENV DOMAIN="127.0.0.1"
 CMD sbcl --load init.lisp && sbcl --swank --radiance plaster filebox keyword-reviews purplish reader

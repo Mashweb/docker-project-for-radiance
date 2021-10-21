@@ -61,7 +61,6 @@ build-all: $(STAGES)
 $(STAGES):%: Dockerfile Makefile files/*.sh files/.sbclrc
 	docker build --target $@ \
 		--build-arg APP=$(APP) \
-		--build-arg DOMAIN=$(DROPLET_DOMAIN) \
 		-t $(IMAGE)-$@:$(TAG) .
 
 $(STAGES:=-run):%-run: %
@@ -101,6 +100,7 @@ $(STAGES:=-deploy):%-deploy: % %-publish
 	  mkdir -p $(DB_DIR) $(APPS_DIR); \
 	  docker run --rm --name $(CONT) -d \
 	    -p $(SWANK_PORT):4005 -p $(HTTP_PORT):8080 \
+	    -e DOMAIN=$(DROPLET_DOMAIN) \
 	    --mount src=$(DB_DIR),target=/db,type=bind \
 	    --mount src=$(APPS_DIR),target=/apps,type=bind \
 	    $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG); \
