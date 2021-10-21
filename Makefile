@@ -32,6 +32,8 @@ APPS_DIR    ?= $(shell pwd)/apps
 DROPLET_UNAME  ?= root
 # Internet-exposed IP address of the Digital Ocean droplet
 DROPLET_IP     ?= 164.90.211.183
+# Droplet domain
+DROPLET_DOMAIN ?= $(DROPLET_IP)
 
 # All stages
 STAGES          = base development samples
@@ -57,7 +59,10 @@ help:
 build-all: $(STAGES)
 
 $(STAGES):%: Dockerfile Makefile files/*.sh files/.sbclrc
-	docker build --target $@ --build-arg APP=$(APP) -t $(IMAGE)-$@:$(TAG) .
+	docker build --target $@ \
+		--build-arg APP=$(APP) \
+		--build-arg DOMAIN=$(DROPLET_DOMAIN) \
+		-t $(IMAGE)-$@:$(TAG) .
 
 $(STAGES:=-run):%-run: %
 	docker run --rm --name $(CONT) -d \
@@ -98,7 +103,7 @@ $(STAGES:=-deploy):%-deploy: % %-publish
 	    -p $(SWANK_PORT):4005 -p $(HTTP_PORT):8080 \
 	    --mount src=$(DB_DIR),target=/db,type=bind \
 	    --mount src=$(APPS_DIR),target=/apps,type=bind \
-	    $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG) \
+	    $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG); \
 	  echo Started container $(CONT) with $(DHUB_UNAME)/$(IMAGE)-$<:$(TAG); \
 	"
 

@@ -20,24 +20,30 @@ RUN /usr/bin/sbcl --load '/tmp/quicklisp.lisp' \
          --eval '(radiance:startup)' \
          --eval '(sb-ext:quit)' && \
     rm /tmp/quicklisp.lisp
-COPY files/.sbclrc .
+COPY files/.sbclrc files/init.lisp .
 COPY files/quickload.sh files/quickload-radiance-app.sh /usr/bin/
 
 EXPOSE 8080
 
 ENV APP ""
-ENTRYPOINT sbcl --radiance
+ARG DOMAIN
+ENV DOMAIN $DOMAIN
+CMD sbcl --load init.lisp && sbcl --radiance
 
 #### Development image adds swank and an open port to connect to it
 FROM base AS development
 
 RUN quickload.sh swank
 EXPOSE 4005
-ENTRYPOINT sbcl --swank --radiance
+ARG DOMAIN
+ENV DOMAIN $DOMAIN
+CMD sbcl --load init.lisp && sbcl --swank --radiance
 
 #### Development image with Radiance's sample projects
 FROM development AS samples
 
 RUN quickload-radiance-app.sh plaster filebox keyword-reviews purplish reader
 
-ENTRYPOINT sbcl --swank --radiance plaster filebox keyword-reviews purplish reader
+ARG DOMAIN
+ENV DOMAIN $DOMAIN
+CMD sbcl --load init.lisp && sbcl --swank --radiance plaster filebox keyword-reviews purplish reader
