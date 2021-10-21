@@ -20,7 +20,7 @@ RUN /usr/bin/sbcl --load '/tmp/quicklisp.lisp' \
          --eval '(radiance:startup)' \
          --eval '(sb-ext:quit)' && \
     rm /tmp/quicklisp.lisp
-COPY files/.sbclrc files/init.lisp .
+COPY files/.sbclrc files/init.lisp ./
 COPY files/quickload.sh files/quickload-radiance-app.sh /usr/bin/
 
 EXPOSE 8080
